@@ -6,6 +6,9 @@ CurrentModule = Thinkers
 
 Documentation for [Thinkers](https://github.com/singularitti/Thinkers.jl).
 
+This repository is inspired by [Thunks.jl](https://github.com/tbenst/Thunks.jl), but with
+some modifications to its design.
+
 See the [Index](@ref main-index) for the complete list of documented functions
 and types.
 
@@ -55,6 +58,7 @@ a few guidelines that should be followed when opening pull requests and contribu
 ```@contents
 Pages = [
     "installation.md",
+    "public.md",
     "developers/contributing.md",
     "developers/style-guide.md",
     "developers/design-principles.md",
