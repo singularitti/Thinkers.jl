@@ -37,6 +37,24 @@ function reify!(thunk::Thunk)
     end
     return thunk
 end
+# See https://github.com/goropikari/Timeout.jl/blob/c7df3cd/src/Timeout.jl#L18-L45
+function reify!(thunk::TimeLimitedThunk)
+    istimedout = Channel{Bool}(1)
+    main = @async begin
+        reify!(thunk.wrapped)
+        put!(istimedout, false)
+    end
+    timer = @async begin
+        sleep(thunk.time_limit)
+        put!(istimedout, true)
+        Base.throwto(main, TimeoutException())
+    end
+    fetch(istimedout)  # You do not know which of `main` and `timer` finishes first, so you need `istimedout`.
+    close(istimedout)
+    _kill(main)  # Kill all `Task`s after done.
+    _kill(timer)
+    return thunk
+end
 
 isevaluated(thunk::Thunk) = thunk.result === nothing
 
