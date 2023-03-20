@@ -2,6 +2,8 @@ module Thinkers
 
 using Dates: Period
 
+export Thunk, TimeLimitedThunk, reify!, isevaluated, haserred, getresult
+
 struct ErrorInfo{T}
     thrown::T
     stacktrace::Base.StackTraces.StackTrace
