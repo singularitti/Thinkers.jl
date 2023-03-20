@@ -1,5 +1,7 @@
 module Thinkers
 
+using Dates: Period
+
 struct ErrorInfo{T}
     thrown::T
     stacktrace::Base.StackTraces.StackTrace
