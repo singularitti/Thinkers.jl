@@ -19,6 +19,14 @@ mutable struct Thunk <: Think
         new(callable, args, kwargs, nothing)
 end
 Thunk(f, args...; kwargs...) = Thunk(f, args, kwargs)
+mutable struct TimeLimitedThunk <: WrappedThink
+    time_limit::Period
+    wrapped::Thunk
+end
+TimeLimitedThunk(time_limit, callable, args::Tuple, kwargs::Iterators.Pairs) =
+    TimeLimitedThunk(time_limit, Thunk(callable, args, kwargs, nothing))
+TimeLimitedThunk(time_limit, callable, args...; kwargs...) =
+    TimeLimitedThunk(time_limit, callable, args, kwargs)
 
 function reify!(thunk::Thunk)
     try
