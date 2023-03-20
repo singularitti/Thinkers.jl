@@ -61,8 +61,10 @@ function reify!(thunk::TimeLimitedThunk)
 end
 
 isevaluated(thunk::Thunk) = thunk.result !== nothing
+isevaluated(think::WrappedThink) = isevaluated(think.wrapped)
 
 haserred(thunk::Thunk) = isevaluated(thunk) && something(thunk.result) isa ErrorInfo
+haserred(think::WrappedThink) = haserred(think.wrapped)
 
 getresult(thunk::Thunk) = thunk.result
 getresult(think::WrappedThink) = getresult(think.wrapped)
@@ -81,6 +83,14 @@ function Base.setproperty!(think::WrappedThink, name::Symbol, x)
         setfield!(think.wrapped, name, x)
     else
         setfield!(think, name, x)
+    end
+end
+
+function Base.getproperty(think::WrappedThink, name::Symbol)
+    if name in (:callable, :args, :kwargs, :result)
+        return getfield(think.wrapped, name)
+    else
+        return getfield(think, name)
     end
 end
 
