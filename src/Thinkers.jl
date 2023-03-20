@@ -52,4 +52,12 @@ function Base.setproperty!(thunk::Thunk, name::Symbol, x)
     end
 end
 
+# See https://github.com/goropikari/Timeout.jl/blob/c7df3cd/src/Timeout.jl#L6-L11
+function _kill(task)
+    try
+        schedule(task, InterruptException(); error=true)
+    catch
+    end
+end
+
 end
