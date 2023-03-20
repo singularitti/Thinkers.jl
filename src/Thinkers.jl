@@ -74,7 +74,7 @@ mutable struct Thunk <: Think
         new(callable, args, kwargs, nothing)
 end
 Thunk(f, args...; kwargs...) = Thunk(f, args, kwargs)
-mutable struct TimeLimitedThunk <: WrappedThink
+struct TimeLimitedThunk <: WrappedThink
     time_limit::Period
     wrapped::Thunk
 end
@@ -152,15 +152,6 @@ function Base.setproperty!(thunk::Thunk, name::Symbol, x)
         error("you cannot redefine a `Thunk` after it has been constructed!")
     else
         setfield!(thunk, name, x)
-    end
-end
-function Base.setproperty!(think::WrappedThink, name::Symbol, x)
-    if name in (:callable, :args, :kwargs)
-        error("you cannot redefine a `Thunk` after it has been constructed!")
-    elseif name == :result
-        setfield!(think.wrapped, name, x)
-    else
-        setfield!(think, name, x)
     end
 end
 
