@@ -30,4 +30,12 @@ function reify!(thunk::Thunk)
     end
 end
 
+function Base.setproperty!(thunk::Thunk, name::Symbol, x)
+    if name in (:callable, :args, :kwargs)
+        error("you cannot redefine a `Thunk` after it has been constructed!")
+    else
+        setfield!(thunk, name, x)
+    end
+end
+
 end
