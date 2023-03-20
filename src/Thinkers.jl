@@ -23,11 +23,14 @@ function reify!(thunk::Thunk)
         s = stacktrace(catch_backtrace())
         thunk.result = Some(ErredResult(e, s))
     end
+    return thunk
 end
 
 isevaluated(thunk::Thunk) = thunk.result === nothing
 
 haserred(thunk::Thunk) = isevaluated(thunk) && something(thunk.result) isa ErredResult
+
+getresult(thunk::Thunk) = thunk.result
 
 function Base.setproperty!(thunk::Thunk, name::Symbol, x)
     if name in (:callable, :args, :kwargs)
