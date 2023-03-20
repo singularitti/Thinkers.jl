@@ -1,5 +1,6 @@
-using Thinkers
-using Test
+using Dates: Second
+using Thinkers: ErrorInfo, Thunk, TimeLimitedThunk, reify!, isevaluated, haserred, getresult
+using Test: @testset, @test
 
 @testset "Thinkers.jl" begin
     function f₁()
@@ -50,5 +51,27 @@ using Test
         @test something(getresult(l)) isa Base.Process
         @test getresult(m) == Some(sin(1))
         @test something(getresult(n)) isa Base.ProcessChain
+    end
+    @testset "Test reifying `TimeLimitedThunk`s" begin
+        i = TimeLimitedThunk(Second(4), f₁, ())
+        k = TimeLimitedThunk(Second(4), f₃, 6)
+        m = TimeLimitedThunk(Second(5), f₅, 1, 1)
+        n = TimeLimitedThunk(Second(2), f₆, 5; x=3)
+        for thunk in (i, k, n)
+            @test !isevaluated(thunk)
+            @test getresult(thunk) === nothing
+            reify!(thunk)
+            @test isevaluated(thunk)
+            @test haserred(thunk)
+        end
+        @test !isevaluated(m)
+        @test getresult(m) === nothing
+        reify!(m)
+        @test isevaluated(m)
+        @test !haserred(m)
+        @test something(getresult(i)) isa ErrorInfo
+        @test something(getresult(k)) isa ErrorInfo
+        @test getresult(m) == Some(sin(1))
+        @test something(getresult(n)) isa ErrorInfo
     end
 end
