@@ -61,6 +61,7 @@ isevaluated(thunk::Thunk) = thunk.result === nothing
 haserred(thunk::Thunk) = isevaluated(thunk) && something(thunk.result) isa ErrorInfo
 
 getresult(thunk::Thunk) = thunk.result
+getresult(think::WrappedThink) = getresult(think.wrapped)
 
 function Base.setproperty!(thunk::Thunk, name::Symbol, x)
     if name in (:callable, :args, :kwargs)
