@@ -154,15 +154,6 @@ function Base.setproperty!(thunk::Thunk, name::Symbol, x)
         setfield!(thunk, name, x)
     end
 end
-function Base.setproperty!(think::WrappedThink, name::Symbol, x)
-    if name in (:callable, :args, :kwargs)
-        error("you cannot redefine a `Thunk` after it has been constructed!")
-    elseif name == :result
-        setfield!(think.wrapped, name, x)
-    else
-        setfield!(think, name, x)
-    end
-end
 
 function Base.getproperty(think::WrappedThink, name::Symbol)
     if name in (:callable, :args, :kwargs, :result)
