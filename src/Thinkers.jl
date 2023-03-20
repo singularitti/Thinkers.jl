@@ -1,6 +1,6 @@
 module Thinkers
 
-struct ErredResult{T}
+struct ErrorInfo{T}
     thrown::T
     stacktrace::Base.StackTraces.StackTrace
 end
@@ -21,14 +21,14 @@ function reify!(thunk::Thunk)
         thunk.result = Some(thunk.callable(thunk.args...; thunk.kwargs...))
     catch e
         s = stacktrace(catch_backtrace())
-        thunk.result = Some(ErredResult(e, s))
+        thunk.result = Some(ErrorInfo(e, s))
     end
     return thunk
 end
 
 isevaluated(thunk::Thunk) = thunk.result === nothing
 
-haserred(thunk::Thunk) = isevaluated(thunk) && something(thunk.result) isa ErredResult
+haserred(thunk::Thunk) = isevaluated(thunk) && something(thunk.result) isa ErrorInfo
 
 getresult(thunk::Thunk) = thunk.result
 
