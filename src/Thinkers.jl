@@ -1,5 +1,8 @@
 module Thinkers
 
-# Write your package code here.
+struct ErredResult{T}
+    thrown::T
+    stacktrace::Base.StackTraces.StackTrace
+end
 
 end
