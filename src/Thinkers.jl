@@ -5,7 +5,11 @@ struct ErrorInfo{T}
     stacktrace::Base.StackTraces.StackTrace
 end
 
+# See https://github.com/goropikari/Timeout.jl/blob/c7df3cd/src/Timeout.jl#L4
+struct TimeoutException <: Exception end
+
 abstract type Think end
+abstract type WrappedThink <: Think end
 mutable struct Thunk <: Think
     callable
     args::Tuple
