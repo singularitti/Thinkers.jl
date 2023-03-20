@@ -10,11 +10,9 @@ mutable struct Thunk <: Think
     callable
     args::Tuple
     kwargs::Iterators.Pairs
-    isevaluated::Bool
-    haserred::Bool
     result::Union{Some,Nothing}
     Thunk(callable, args::Tuple, kwargs::Iterators.Pairs) =
-        new(callable, args, kwargs, false, false, nothing)
+        new(callable, args, kwargs, nothing)
 end
 Thunk(f, args...; kwargs...) = Thunk(f, args, kwargs)
 
@@ -22,13 +20,14 @@ function reify!(thunk::Thunk)
     try
         thunk.result = Some(thunk.callable(thunk.args...; thunk.kwargs...))
     catch e
-        thunk.haserred = true
         s = stacktrace(catch_backtrace())
         thunk.result = Some(ErredResult(e, s))
-    finally
-        thunk.isevaluated = true
     end
 end
+
+isevaluated(thunk::Thunk) = thunk.result === nothing
+
+haserred(thunk::Thunk) = isevaluated(thunk) && something(thunk.result) isa ErredResult
 
 function Base.setproperty!(thunk::Thunk, name::Symbol, x)
     if name in (:callable, :args, :kwargs)
