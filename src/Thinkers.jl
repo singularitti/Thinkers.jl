@@ -28,9 +28,9 @@ mutable struct TimeLimitedThunk <: WrappedThink
     wrapped::Thunk
 end
 TimeLimitedThunk(time_limit, callable, args::Tuple, kwargs::Iterators.Pairs) =
-    TimeLimitedThunk(time_limit, Thunk(callable, args, kwargs, nothing))
-TimeLimitedThunk(time_limit, callable, args...; kwargs...) =
-    TimeLimitedThunk(time_limit, callable, args, kwargs)
+    TimeLimitedThunk(time_limit, Thunk(callable, args, kwargs))
+TimeLimitedThunk(time_limit, callable::Base.Callable, args...; kwargs...) =
+    TimeLimitedThunk(time_limit, Thunk(callable, args, kwargs))
 
 function reify!(thunk::Thunk)
     try
