@@ -74,7 +74,7 @@ mutable struct Thunk <: Think
         new(callable, args, kwargs, nothing)
 end
 Thunk(f, args...; kwargs...) = Thunk(f, args, kwargs)
-mutable struct TimeLimitedThunk <: WrappedThink
+struct TimeLimitedThunk <: WrappedThink
     time_limit::Period
     wrapped::Thunk
 end
