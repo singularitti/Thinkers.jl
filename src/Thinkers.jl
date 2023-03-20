@@ -18,4 +18,16 @@ mutable struct Thunk <: Think
 end
 Thunk(f, args...; kwargs...) = Thunk(f, args, kwargs)
 
+function reify!(thunk::Thunk)
+    try
+        thunk.result = Some(thunk.callable(thunk.args...; thunk.kwargs...))
+    catch e
+        thunk.haserred = true
+        s = stacktrace(catch_backtrace())
+        thunk.result = Some(ErredResult(e, s))
+    finally
+        thunk.isevaluated = true
+    end
+end
+
 end
