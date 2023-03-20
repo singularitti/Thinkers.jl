@@ -58,7 +58,7 @@ function reify!(thunk::TimeLimitedThunk)
     return thunk
 end
 
-isevaluated(thunk::Thunk) = thunk.result === nothing
+isevaluated(thunk::Thunk) = thunk.result !== nothing
 
 haserred(thunk::Thunk) = isevaluated(thunk) && something(thunk.result) isa ErrorInfo
 
