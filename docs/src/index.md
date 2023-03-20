@@ -6,6 +6,9 @@ CurrentModule = Thinkers
 
 Documentation for [Thinkers](https://github.com/singularitti/Thinkers.jl).
 
+This repository is inspired by [Thunks.jl](https://github.com/tbenst/Thunks.jl), but with
+some modifications to its design.
+
 See the [Index](@ref main-index) for the complete list of documented functions
 and types.
 

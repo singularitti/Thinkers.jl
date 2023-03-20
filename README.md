@@ -23,6 +23,9 @@
 [style-img]: https://img.shields.io/badge/code%20style-blue-4495d1.svg
 [style-url]: https://github.com/invenia/BlueStyle
 
+This repository is inspired by [Thunks.jl](https://github.com/tbenst/Thunks.jl), but with
+some modifications to its design.
+
 The code is [hosted on GitHub](https://github.com/singularitti/Thinkers.jl),
 with some continuous integration services to test its validity.
 
