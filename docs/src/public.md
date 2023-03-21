@@ -8,6 +8,7 @@ CurrentModule = Thinkers
 
 ```@docs
 Thunk
+Thunk(::Thunk)
 ErrorInfo
 reify!
 isevaluated
