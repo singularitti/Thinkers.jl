@@ -74,6 +74,21 @@ mutable struct Thunk <: Think
         new(callable, args, kwargs, nothing)
 end
 Thunk(f, args...; kwargs...) = Thunk(f, args, kwargs)
+"""
+    Thunk(thunk::Thunk)
+
+Create a new `Thunk` from an existing `Thunk` by deep-copying the callable and arguments
+of the `thunk`.
+
+!!! warning
+    This is just a shorthand for writing a new `Thunk` instance.
+    It is not guaranteed that the new `Thunk` will behave exactly as the original
+    one.
+    If the callable, positional arguments, or keyword arguments have changed since
+    creating the original `Thunk` instance, the new `Thunk` will copy them as they are.
+    If this is the case, you should generate a new callable and new arguments for
+    the new `Thunk` instance.
+"""
 Thunk(thunk::Thunk) =
     Thunk(deepcopy(thunk.callable), deepcopy(thunk.args), deepcopy(thunk.kwargs), nothing)
 struct TimeLimitedThunk <: WrappedThink
