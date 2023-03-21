@@ -80,8 +80,11 @@ struct TimeLimitedThunk <: WrappedThink
 end
 TimeLimitedThunk(time_limit, callable, args::Tuple, kwargs::Iterators.Pairs) =
     TimeLimitedThunk(time_limit, Thunk(callable, args, kwargs))
-TimeLimitedThunk(time_limit, callable::Base.Callable, args...; kwargs...) =
-    TimeLimitedThunk(time_limit, Thunk(callable, args, kwargs))
+# Distinguish between no-arg functions and the default constructor
+TimeLimitedThunk(time_limit, callable; kwargs...) =
+    TimeLimitedThunk(time_limit, Thunk(callable; kwargs...))
+TimeLimitedThunk(time_limit, callable, arg, args...; kwargs...) =
+    TimeLimitedThunk(time_limit, Thunk(callable, arg, args...; kwargs...))
 
 # See https://github.com/tbenst/Thunks.jl/blob/ff2a553/src/core.jl#L113-L123
 """
