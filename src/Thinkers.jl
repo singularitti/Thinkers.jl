@@ -74,6 +74,8 @@ mutable struct Thunk <: Think
         new(callable, args, kwargs, nothing)
 end
 Thunk(f, args...; kwargs...) = Thunk(f, args, kwargs)
+Thunk(thunk::Thunk) =
+    Thunk(deepcopy(thunk.callable), deepcopy(thunk.args), deepcopy(thunk.kwargs), nothing)
 struct TimeLimitedThunk <: WrappedThink
     time_limit::Period
     wrapped::Thunk
