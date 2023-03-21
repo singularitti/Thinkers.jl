@@ -53,7 +53,7 @@ using Test: @testset, @test
         @test something(getresult(n)) isa Base.ProcessChain
     end
     @testset "Test reifying `TimeLimitedThunk`s" begin
-        i = TimeLimitedThunk(Second(4), f₁, ())
+        i = TimeLimitedThunk(Second(4), f₁)
         k = TimeLimitedThunk(Second(4), f₃, 6)
         m = TimeLimitedThunk(Second(5), f₅, 1, 1)
         n = TimeLimitedThunk(Second(2), f₆, 5; x=3)
