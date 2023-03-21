@@ -1,4 +1,3 @@
-using Dates: Second
 using Thinkers: ErrorInfo
 
 @testset "Test reifying `Think`s" begin
