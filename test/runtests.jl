@@ -5,4 +5,5 @@ using Test
 @testset "Thinkers.jl" begin
     include("construction.jl")
     include("reifying.jl")
+    include("arguments.jl")
 end
