@@ -178,6 +178,17 @@ function setargs!(thunk::Thunk, args...; kwargs...)
     end
     return thunk
 end
+function setargs!(think::WrappedThink, args...; kwargs...)
+    if isevaluated(think)
+        error(
+            "you cannot change the arguments of a `$(typeof(think))` after it has been evaluated!",
+        )
+    else
+        think.wrapped.args = args
+        think.wrapped.kwargs = kwargs
+    end
+    return think
+end
 
 function Base.getproperty(think::WrappedThink, name::Symbol)
     if name in (:callable, :args, :kwargs, :result)
