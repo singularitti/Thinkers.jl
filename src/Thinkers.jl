@@ -110,13 +110,10 @@ TimeLimitedThunk(time_limit, callable, arg, args...; kwargs...) =
 """
     reify!(thunk::Thunk)
 
-Reify a `Thunk` into a value.
+Reify a `Thunk`.
 
-Compute the value of the expression.
-Walk through the `Thunk`'s arguments and keywords, recursively evaluating each one,
-and then evaluating the `Thunk`'s function with the evaluated arguments.
-
-See also [`Thunk`](@ref).
+Calculate the value of the expression by recursively evaluating each argument and keyword of
+the `Thunk`, and then evaluating the `Thunk`'s callable with the evaluated arguments.
 """
 function reify!(thunk::Thunk)
     try
