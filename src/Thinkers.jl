@@ -170,6 +170,11 @@ Get the result of a `Thunk`. If `thunk` has not been evaluated, return `nothing`
 getresult(thunk::Thunk) = thunk.result
 getresult(think::WrappedThink) = getresult(think.wrapped)
 
+"""
+    setargs!(think::Think, args...; kwargs...)
+
+Change the arguments of a `Think`, after it has been created but before it has been evaluated.
+"""
 function setargs!(thunk::Thunk, args...; kwargs...)
     if isevaluated(thunk)
         error(
