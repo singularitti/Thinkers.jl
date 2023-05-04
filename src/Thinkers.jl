@@ -103,6 +103,9 @@ TimeLimitedThunk(time_limit, callable; kwargs...) =
 TimeLimitedThunk(time_limit, callable, arg, args...; kwargs...) =
     TimeLimitedThunk(time_limit, Thunk(callable, arg, args...; kwargs...))
 
+# TODO: CachedThunk
+# which does not allow `setargs!`
+
 # See https://github.com/tbenst/Thunks.jl/blob/ff2a553/src/core.jl#L113-L123
 """
     reify!(thunk::Thunk)
