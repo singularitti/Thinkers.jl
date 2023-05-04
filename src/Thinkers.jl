@@ -2,7 +2,7 @@ module Thinkers
 
 using Dates: Period
 
-export Thunk, TimeLimitedThunk, reify!, isevaluated, haserred, getresult
+export Thunk, TimeLimitedThunk, reify!, setargs!, isevaluated, haserred, getresult
 
 "Capture errors and stack traces from a running `Thunk`."
 struct ErrorInfo{T}
@@ -167,12 +167,27 @@ Get the result of a `Thunk`. If `thunk` has not been evaluated, return `nothing`
 getresult(thunk::Thunk) = thunk.result
 getresult(think::WrappedThink) = getresult(think.wrapped)
 
-function Base.setproperty!(thunk::Thunk, name::Symbol, x)
-    if name in (:callable, :args, :kwargs)
-        error("you cannot redefine a `Thunk` after it has been constructed!")
+function setargs!(thunk::Thunk, args...; kwargs...)
+    if isevaluated(thunk)
+        error(
+            "you cannot change the arguments of a `$(typeof(thunk))` after it has been evaluated!",
+        )
     else
-        setfield!(thunk, name, x)
+        thunk.args = args
+        thunk.kwargs = kwargs
     end
+    return thunk
+end
+function setargs!(think::WrappedThink, args...; kwargs...)
+    if isevaluated(think)
+        error(
+            "you cannot change the arguments of a `$(typeof(think))` after it has been evaluated!",
+        )
+    else
+        think.wrapped.args = args
+        think.wrapped.kwargs = kwargs
+    end
+    return think
 end
 
 function Base.getproperty(think::WrappedThink, name::Symbol)
