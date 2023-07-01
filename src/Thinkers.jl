@@ -122,8 +122,7 @@ function reify!(thunk::Thunk)
         s = stacktrace(catch_backtrace())
         thunk.result = Some(ErrorInfo(e, s))
         @warn "caught an error when reifying `thunk`! See `getresult(thunk)` for details."
-        Base.showerror(stdout, e)  # See https://discourse.julialang.org/t/how-to-print-a-backtrace/74164/2
-        Base.show_backtrace(stdout, s)
+        Base.showerror(stdout, e, s)  # See https://discourse.julialang.org/t/how-to-print-a-backtrace/74164/4
     end
     return thunk
 end
