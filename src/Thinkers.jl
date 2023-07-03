@@ -205,6 +205,12 @@ function Base.getproperty(think::WrappedThink, name::Symbol)
     end
 end
 
+function Base.show(io::IO, ::MIME"text/plain", info::ErrorInfo)
+    Base.println(io, "the error and the stacktrace were:")
+    Base.showerror(io, info.thrown, info.stacktrace)
+    return nothing
+end
+
 # See https://github.com/goropikari/Timeout.jl/blob/c7df3cd/src/Timeout.jl#L6-L11
 function _kill(task)
     try
