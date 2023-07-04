@@ -1,6 +1,6 @@
 module Thinkers
 
-export setargs!, isevaluated, haserred, getresult
+export setargs!, isreified, haserred, getresult
 
 "Capture errors and stack traces from a running `Thunk`."
 struct ErrorInfo{T}
@@ -13,14 +13,14 @@ abstract type WrappedThink <: Think end
 # TODO: CachedThunk
 # which does not allow `setargs!`
 
-isevaluated(think::WrappedThink) = isevaluated(think.wrapped)
+isreified(think::WrappedThink) = isreified(think.wrapped)
 
 haserred(think::WrappedThink) = haserred(think.wrapped)
 
 getresult(think::WrappedThink) = getresult(think.wrapped)
 
 function setargs!(think::WrappedThink, args...; kwargs...)
-    if isevaluated(think)
+    if isreified(think)
         error(
             "you cannot change the arguments of a `$(typeof(think))` after it has been evaluated!",
         )

@@ -99,23 +99,23 @@ function reify!(thunk::Thunk)
 end
 
 """
-    isevaluated(thunk::Thunk)
+    isreified(thunk::Thunk)
 
-Determine whether `thunk` has been executed before.
+Determine whether `thunk` has been reified.
 """
-isevaluated(thunk::Thunk) = thunk.result !== nothing
+isreified(thunk::Thunk) = thunk.result !== nothing
 
 """
     haserred(thunk::Thunk)
 
-Check if thunk produced an error when executed.
+Check if `thunk` produced an error when reified.
 """
-haserred(thunk::Thunk) = isevaluated(thunk) && something(thunk.result) isa ErrorInfo
+haserred(thunk::Thunk) = isreified(thunk) && something(thunk.result) isa ErrorInfo
 
 """
     getresult(thunk::Thunk)
 
-Get the result of a `Thunk`. If `thunk` has not been evaluated, return `nothing`, else return a `Some`-wrapped result.
+Get the result of a `Thunk`. If `thunk` has not been reified, return `nothing`, else return a `Some`-wrapped result.
 """
 getresult(thunk::Thunk) = thunk.result
 
@@ -125,7 +125,7 @@ getresult(thunk::Thunk) = thunk.result
 Change the arguments of a `Think`, after it has been created but before it has been evaluated.
 """
 function setargs!(thunk::Thunk, args...; kwargs...)
-    if isevaluated(thunk)
+    if isreified(thunk)
         error(
             "you cannot change the arguments of a `$(typeof(thunk))` after it has been evaluated!",
         )

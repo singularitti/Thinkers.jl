@@ -37,10 +37,10 @@ using Thinkers: ErrorInfo
         m = Thunk(f₅, 3, 1)
         n = Thunk(f₆, 1; x=3)
         for thunk in (i, j, k, l, m, n)
-            @test !isevaluated(thunk)
+            @test !isreified(thunk)
             @test getresult(thunk) === nothing
             reify!(thunk)
-            @test isevaluated(thunk)
+            @test isreified(thunk)
             @test !haserred(thunk)
         end
         @test getresult(i) == Some(nothing)
@@ -56,16 +56,16 @@ using Thinkers: ErrorInfo
         m = TimeLimitedThunk(Second(5), f₅, 1, 1)
         n = TimeLimitedThunk(Second(2), f₆, 5; x=3)
         for thunk in (i, k, n)
-            @test !isevaluated(thunk)
+            @test !isreified(thunk)
             @test getresult(thunk) === nothing
             reify!(thunk)
-            @test isevaluated(thunk)
+            @test isreified(thunk)
             @test haserred(thunk)
         end
-        @test !isevaluated(m)
+        @test !isreified(m)
         @test getresult(m) === nothing
         reify!(m)
-        @test isevaluated(m)
+        @test isreified(m)
         @test !haserred(m)
         @test something(getresult(i)) isa ErrorInfo
         @test something(getresult(k)) isa ErrorInfo

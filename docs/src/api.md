@@ -8,7 +8,7 @@ CurrentModule = Thinkers
 Thunk
 Thunk(::Thunk)
 ErrorInfo
-isevaluated
+isreified
 haserred
 getresult
 reify!
