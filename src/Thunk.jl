@@ -67,8 +67,7 @@ of the `thunk`.
 
 !!! warning
     This is just a shorthand for writing a new `Thunk` instance.
-    It is not guaranteed that the new `Thunk` will behave exactly as the original
-    one.
+    It is not guaranteed that the new `Thunk` will behave exactly as the original one.
     If the callable, positional arguments, or keyword arguments have changed since
     creating the original `Thunk` instance, the new `Thunk` will copy them as they are.
     If this is the case, you should generate a new callable and new arguments for
