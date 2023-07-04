@@ -13,4 +13,5 @@ haserred
 getresult
 reify!
 setargs!
+reset!
 ```

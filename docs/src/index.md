@@ -58,7 +58,7 @@ a few guidelines that should be followed when opening pull requests and contribu
 ```@contents
 Pages = [
     "installation.md",
-    "public.md",
+    "api.md",
     "developers/contributing.md",
     "developers/style-guide.md",
     "developers/design-principles.md",
@@ -70,11 +70,11 @@ Depth = 3
 ## Library outline
 
 ```@contents
-Pages = ["public.md"]
+Pages = ["api.md"]
 ```
 
 ### [Index](@id main-index)
 
 ```@index
-Pages = ["public.md"]
+Pages = ["api.md"]
 ```
