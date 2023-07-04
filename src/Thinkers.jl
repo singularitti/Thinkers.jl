@@ -1,6 +1,6 @@
 module Thinkers
 
-export setargs!, isreified, haserred, getresult
+export setargs!, isreified, haserred, getresult, unwrapresult
 
 "Capture errors and stack traces from a running `Thunk`."
 struct ErrorInfo{T}
@@ -12,6 +12,17 @@ abstract type Think end
 abstract type WrappedThink <: Think end
 # TODO: CachedThunk
 # which does not allow `setargs!`
+
+"""
+    unwrapresult(think::Think)
+
+Unwrap the retrieved result of a `think` object.
+
+This function extracts the result of a `Think` object from its `Some` container.
+If the `Think` object has not been reified (i.e., `reify!` has not been called) or is
+still running, it throws an error.
+"""
+unwrapresult(think::Think) = something(getresult(think))
 
 isreified(think::WrappedThink) = isreified(think.wrapped)
 

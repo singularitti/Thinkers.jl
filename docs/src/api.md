@@ -11,6 +11,7 @@ ErrorInfo
 isreified
 haserred
 getresult
+unwrapresult
 reify!
 setargs!
 reset!
