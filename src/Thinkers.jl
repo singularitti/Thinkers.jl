@@ -197,6 +197,11 @@ function setargs!(think::WrappedThink, args...; kwargs...)
     return think
 end
 
+function reset!(think::Think)
+    think.result = nothing
+    return think
+end
+
 function Base.getproperty(think::WrappedThink, name::Symbol)
     if name in (:callable, :args, :kwargs, :result)
         return getfield(think.wrapped, name)
