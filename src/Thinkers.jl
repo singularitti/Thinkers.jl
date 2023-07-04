@@ -21,9 +21,7 @@ getresult(think::WrappedThink) = getresult(think.wrapped)
 
 function setargs!(think::WrappedThink, args...; kwargs...)
     if isreified(think)
-        error(
-            "you cannot change the arguments of a `$(typeof(think))` after it has been evaluated!",
-        )
+        @warn "you are changing the arguments of a `$(typeof(think))` after it has been reified!"
     else
         think.wrapped.args = args
         think.wrapped.kwargs = kwargs

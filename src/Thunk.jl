@@ -126,9 +126,7 @@ Change the arguments of a `Think`, after it has been created but before it has b
 """
 function setargs!(thunk::Thunk, args...; kwargs...)
     if isreified(thunk)
-        error(
-            "you cannot change the arguments of a `$(typeof(thunk))` after it has been evaluated!",
-        )
+        @warn "you are changing the arguments of a `Thunk` after it has been reified!"
     else
         thunk.args = args
         thunk.kwargs = kwargs
