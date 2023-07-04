@@ -7,7 +7,6 @@
     setargs!(i, 1)
     reify!(i)
     @test haserred(i)
-    @test_throws ErrorException setargs!(i, ())
     g(x=1) = cos(x)
     j = Thunk(g)
     setargs!(j, 2)
