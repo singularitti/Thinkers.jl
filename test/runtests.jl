@@ -6,4 +6,5 @@ using Test
     include("construction.jl")
     include("reifying.jl")
     include("arguments.jl")
+    include("resetting.jl")
 end
