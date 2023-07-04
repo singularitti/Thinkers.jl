@@ -1,4 +1,4 @@
-export Thunk, reify!
+export Thunk, reify!, setargs!, isreified, haserred, getresult
 
 # Idea from https://github.com/tbenst/Thunks.jl/blob/ff2a553/src/core.jl#L11-L20
 """

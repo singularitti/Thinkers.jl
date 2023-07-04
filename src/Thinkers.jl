@@ -1,6 +1,6 @@
 module Thinkers
 
-export setargs!, isreified, haserred, getresult, unwrapresult
+export unwrapresult, reset!
 
 "Capture errors and stack traces from a running `Thunk`."
 struct ErrorInfo{T}
