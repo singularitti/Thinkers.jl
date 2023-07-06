@@ -9,10 +9,9 @@ getresult(think::WrappedThink) = getresult(think.wrapped)
 function setargs!(think::WrappedThink, args...; kwargs...)
     if isreified(think)
         @warn "you are changing the arguments of a `$(typeof(think))` after it has been reified!"
-    else
-        think.wrapped.args = args
-        think.wrapped.kwargs = kwargs
     end
+    think.wrapped.args = args
+    think.wrapped.kwargs = kwargs
     return think
 end
 
