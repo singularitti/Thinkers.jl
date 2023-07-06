@@ -133,9 +133,8 @@ Change the arguments of a `Think`, after it has been created but before it has b
 function setargs!(thunk::Thunk, args...; kwargs...)
     if isreified(thunk)
         @warn "you are changing the arguments of a `Thunk` after it has been reified!"
-    else
-        thunk.args = args
-        thunk.kwargs = kwargs
     end
+    thunk.args = args
+    thunk.kwargs = kwargs
     return thunk
 end
