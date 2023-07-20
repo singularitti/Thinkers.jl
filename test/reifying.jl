@@ -73,3 +73,19 @@ using Thinkers: ErrorInfo
         @test something(getresult(n)) isa ErrorInfo
     end
 end
+
+@testset "Test reifying `LazierThunk`s" begin
+    function add(x, y; z=1)
+        return x + y + z
+    end
+    args = Thunk(() -> (1, 2))
+    kwargs = Thunk(() -> (; z=3))
+    lt = LazierThunk(add, args, kwargs)
+    @test !isreified(lt)
+    @test !isreified(lt.args)
+    @test !isreified(lt.kwargs)
+    reify!(lt)
+    @test unwrapresult(lt.args) == (1, 2)
+    @test unwrapresult(lt.kwargs) == (; z=3)
+    @test unwrapresult(lt) == 6
+end
