@@ -27,7 +27,7 @@ function Base.show(io::IO, ::MIME"text/plain", think::Think)
     print(io, " result: ", think.result)
     return nothing
 end
-Base.show(io::IO, ::MIME"text/plain", thunk::LazierThunk) = show(io, thunk)
+Base.show(io::IO, ::MIME"text/plain", thunk::LazyThunk) = show(io, thunk)
 # function Base.show(io::IO, ::MIME"text/plain", think::LazierThunk)
 #     if isreified(think)
 #         println(io, summary(think), ':')

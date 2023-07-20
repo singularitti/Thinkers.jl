@@ -1,16 +1,16 @@
-export LazierThunk
+export LazyThunk
 
-mutable struct LazierThunk <: Think
+mutable struct LazyThunk <: Think
     callable
     args::Thunk
     kwargs::Thunk
     result::Union{Some,Nothing}
-    LazierThunk(callable, args::Thunk, kwargs::Thunk) = new(callable, args, kwargs, nothing)
+    LazyThunk(callable, args::Thunk, kwargs::Thunk) = new(callable, args, kwargs, nothing)
 end
-LazierThunk(callable, args=Thunk(() -> ()), kwargs=Thunk(() -> (;))) =
-    LazierThunk(callable, args, kwargs)
+LazyThunk(callable, args=Thunk(() -> ()), kwargs=Thunk(() -> (;))) =
+    LazyThunk(callable, args, kwargs)
 
-function reify!(thunk::LazierThunk)
+function reify!(thunk::LazyThunk)
     try
         reify!(thunk.args)
     catch e
@@ -39,8 +39,8 @@ function reify!(thunk::LazierThunk)
     return thunk
 end
 
-isreified(thunk::LazierThunk) = thunk.result !== nothing
+isreified(thunk::LazyThunk) = thunk.result !== nothing
 
-haserred(thunk::LazierThunk) = isreified(thunk) && something(thunk.result) isa ErrorInfo
+haserred(thunk::LazyThunk) = isreified(thunk) && something(thunk.result) isa ErrorInfo
 
-getresult(thunk::LazierThunk) = thunk.result
+getresult(thunk::LazyThunk) = thunk.result

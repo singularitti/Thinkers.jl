@@ -40,7 +40,7 @@ function reset!(think::Think)
 end
 
 include("Thunk.jl")
-include("LazierThunk.jl")
+include("LazyThunk.jl")
 include("WrappedThink.jl")
 include("TimeLimitedThunk.jl")
 include("show.jl")
