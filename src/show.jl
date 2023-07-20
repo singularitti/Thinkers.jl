@@ -28,7 +28,7 @@ function Base.show(io::IO, ::MIME"text/plain", think::Think)
     return nothing
 end
 Base.show(io::IO, ::MIME"text/plain", thunk::LazyThunk) = show(io, thunk)
-# function Base.show(io::IO, ::MIME"text/plain", think::LazierThunk)
+# function Base.show(io::IO, ::MIME"text/plain", think::LazyThunk)
 #     if isreified(think)
 #         println(io, summary(think), ':')
 #         print(io, " definition: ", think.callable, '(')
