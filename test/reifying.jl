@@ -1,6 +1,6 @@
 using Thinkers: ErrorInfo
 
-@testset "Test reifying `Think`s" begin
+@testset "Test reifying `Thunk`s" begin
     function f₁()
         println("Start job `i`!")
         return sleep(5)
