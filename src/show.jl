@@ -27,3 +27,36 @@ function Base.show(io::IO, ::MIME"text/plain", think::Think)
     print(io, " result: ", think.result)
     return nothing
 end
+Base.show(io::IO, ::MIME"text/plain", thunk::LazierThunk) = show(io, thunk)
+# function Base.show(io::IO, ::MIME"text/plain", think::LazierThunk)
+#     if isreified(think)
+#         println(io, summary(think), ':')
+#         print(io, " definition: ", think.callable, '(')
+#         args = unwrapresult(think.args)
+#         if length(args) > 1
+#             for v in args[1:(end - 1)]
+#                 print(io, v, ", ")
+#             end
+#             print(io, args[end])
+#         end
+#         kwargs = unwrapresult(think.kwargs)
+#         if isempty(kwargs)
+#             println(io, ')')
+#         else
+#             print(io, ";")
+#             for (k, v) in zip(keys(kwargs)[1:(end - 1)], Tuple(kwargs)[1:(end - 1)])
+#                 print(io, ' ', k, '=', v, ",")
+#             end
+#             print(io, ' ', last(keys(kwargs)), '=', last(values(kwargs)))
+#             println(io, ')')
+#         end
+#         print(io, " result: ", think.result)
+#     else
+#         println(io, summary(think), ':')
+#         println(io, " callable: ", think.callable)
+#         println(io, " args: ", think.args)
+#         println(io, " kwargs: ", think.kwargs)
+#         print(io, " result: ", think.result)
+#     end
+#     return nothing
+# end
