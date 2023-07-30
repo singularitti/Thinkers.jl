@@ -55,10 +55,8 @@ mutable struct Thunk <: Think
     args::Tuple
     kwargs::Iterators.Pairs
     result::Union{Some,Nothing}
-    Thunk(callable, args::Tuple, kwargs::Iterators.Pairs) =
-        new(callable, args, kwargs, nothing)
+    Thunk(callable, args...; kwargs...) = new(callable, args, kwargs, nothing)
 end
-Thunk(f, args...; kwargs...) = Thunk(f, args, kwargs)
 """
     Thunk(thunk::Thunk)
 
