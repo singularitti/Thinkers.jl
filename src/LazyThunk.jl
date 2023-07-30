@@ -5,10 +5,9 @@ mutable struct LazyThunk <: Think
     args::Thunk
     kwargs::Thunk
     result::Union{Some,Nothing}
-    LazyThunk(callable, args::Thunk, kwargs::Thunk) = new(callable, args, kwargs, nothing)
+    LazyThunk(callable, args::Thunk=Thunk(() -> ()), kwargs::Thunk=Thunk(() -> (;))) =
+        new(callable, args, kwargs, nothing)
 end
-LazyThunk(callable, args=Thunk(() -> ()), kwargs=Thunk(() -> (;))) =
-    LazyThunk(callable, args, kwargs)
 
 function reify!(thunk::LazyThunk)
     try
