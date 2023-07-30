@@ -6,7 +6,6 @@ CurrentModule = Thinkers
 
 ```@docs
 Thunk
-Thunk(::Thunk)
 ErrorInfo
 isreified
 haserred
