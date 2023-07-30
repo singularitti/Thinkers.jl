@@ -8,14 +8,13 @@ struct TimeoutException <: Exception end
 struct TimeLimitedThunk <: WrappedThink
     time_limit::Period
     wrapped::Thunk
+    TimeLimitedThunk(time_limit::Period, callable::Thunk) = new(time_limit, callable)
+    # Distinguish between no-arg functions and the default constructor
+    TimeLimitedThunk(time_limit::Period, callable; kwargs...) =
+        TimeLimitedThunk(time_limit, Thunk(callable; kwargs...))
+    TimeLimitedThunk(time_limit::Period, callable, arg, args...; kwargs...) =
+        TimeLimitedThunk(time_limit, Thunk(callable, arg, args...; kwargs...))
 end
-TimeLimitedThunk(time_limit, callable, args::Tuple, kwargs::Iterators.Pairs) =
-    TimeLimitedThunk(time_limit, Thunk(callable, args, kwargs))
-# Distinguish between no-arg functions and the default constructor
-TimeLimitedThunk(time_limit, callable; kwargs...) =
-    TimeLimitedThunk(time_limit, Thunk(callable; kwargs...))
-TimeLimitedThunk(time_limit, callable, arg, args...; kwargs...) =
-    TimeLimitedThunk(time_limit, Thunk(callable, arg, args...; kwargs...))
 
 # See https://github.com/goropikari/Timeout.jl/blob/c7df3cd/src/Timeout.jl#L18-L45
 function reify!(thunk::TimeLimitedThunk)
